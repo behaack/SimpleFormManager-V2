@@ -1,0 +1,19 @@
+{
+  "name": "form-manager2",
+  "version": "2.0.0",
+  "description": "Simple form manager",
+  "main": "index.ts",
+  "private": true,
+  "license": "MIT",
+  "author": "Bill Haack",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
