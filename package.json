@@ -1,9 +1,9 @@
 {
-  "name": "form-manager2",
-  "version": "2.0.0",
+  "name": "simple-form-manager-v2",
+  "version": "0.0.1",
   "description": "Simple form manager",
   "main": "index.ts",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "author": "Bill Haack",
   "scripts": {

@@ -19,10 +19,12 @@ export interface IFormManager {
   form: IForm,
   data: any,
   all: IAll,
+  formSubmittable: boolean  
   running: boolean
   toggleValidationNode: (fieldName: string, validator: any, value: any) => void
   resetForm: () => void
   resetField: (fieldName: string) => void
+  showFieldError: (fieldName: string) => boolean
   onBlur: (fieldName: string) => void
   start: (tickSpeed: number) => void
   stop: () => void
@@ -78,6 +80,10 @@ export default class CFormManager implements IFormManager {
     return this.isRunning
   }
 
+  get formSubmittable (): boolean {
+    return (this.form.dirty && this.form.valid)    
+  }  
+
   get all (): IAll {
     return {
       form: this.form,
@@ -87,7 +93,12 @@ export default class CFormManager implements IFormManager {
       fieldDetails: this.fields,
       data: this.data
     }
-  }      
+  }    
+  
+  public showFieldError (fieldName: string): boolean {
+    const field = this.fields[fieldName]
+    return !field.valid && field.touched
+  }  
 
   public onBlur(fieldName: string): void {
     this.fields[fieldName].touched = true
