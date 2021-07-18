@@ -15,6 +15,26 @@ or
 yarn add simple-form-manager-v2
 ```
 
+## Simple Form Manager V2 Interface Summary
+### Properties
+#### fields: object,
+#### fieldScheme: readonly object
+#### form: readonly object,
+#### data: readonly object,
+#### all: readonly object,
+#### formSubmittable: readonly boolean  
+#### running: readonly boolean
+
+### Methods
+#### toggleValidationNode(fieldName: string, validator: any, value: any: void
+#### resetForm(): void
+#### resetField(fieldName: string): void
+#### showFieldError(fieldName: string): boolean
+#### onBlur(fieldName: string): void
+#### onUpdateValue(fieldName: string, value: any): void
+#### start(tickSpeed: number): void
+#### stop(): void
+
 ## Usage (Getting started)
 Instantiate Simple Form Manager V2
 ```javascript
@@ -121,8 +141,12 @@ In the Userage sction above, we had a form schema name myFormSchema. Here is a s
 import { required, email } from 'vuelidate/lib/validators' 
 
 export default {
-  // the form descibed in this file had two fields
-  username: { // this is one field 
+  // the form descibed in this file had three fields:
+  //   - userId
+  //   - userName
+  //   - email
+  userId: {}, // no validation rules, in the interface the id is likely read-only
+  username: {
     required: { // validation rule for username
       validator: required, 
       errorMessage: 'Username is required'
@@ -130,7 +154,7 @@ export default {
   },
   // email is the other field variable name in your form
   email: {
-    required: { // validation rule #1 for email
+    required: { 
       validator: required, // Must me a function, see below for details
       errorMessage: 'Email is required' // Must be a string
     },
@@ -193,6 +217,7 @@ const fm = new FM(loginFormSchema.js)
  // starts tracking user input with a frequency of 1 second
 fm.start(1000)
 ````
+
 ### stop(): void
 <b>Return value:</b> None
 <b>Parameters:</b> None
@@ -202,6 +227,7 @@ fm.start(1000)
 // starts tracking user input with a frequency of 1 second
 fm.stop() 
 ````
+
 ### onBlur(fieldName): void
 <b>Return value:</b> None
 <b>Parameters:</b> 
@@ -211,6 +237,18 @@ fm.stop()
 ````javascript
 // sets the touched value for the password field to true
 fm.onBlur('password') 
+````
+
+### onUpdateValue(fieldName, value): void
+<b>Return value:</b> None
+<b>Parameters:</b> 
+<b>fieldName (string): </b>The name of the field provided in the Form Schema
+<b>value (any): </b>The new value to be assigned to the field referenced by fieldName
+<b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
+<b>Usage</b>
+````javascript
+// change the value of the 'lastName' field to and empty string (i.e. '')
+fm.onUpdateValue('lastName', '')
 ````
 
 ### toggleValidationNode(fieldName, validationRule, value): void

@@ -26,6 +26,7 @@ export interface IFormManager {
   resetField: (fieldName: string) => void
   showFieldError: (fieldName: string) => boolean
   onBlur: (fieldName: string) => void
+  onUpdateValue: (fieldName: string, value: any) => void
   start: (tickSpeed: number) => void
   stop: () => void
 }
@@ -102,6 +103,10 @@ export default class CFormManager implements IFormManager {
 
   public onBlur(fieldName: string): void {
     this.fields[fieldName].touched = true
+  }
+
+  public onUpdateValue(fieldName: string, value: any) {
+    this.fields[fieldName].value = value
   }
 
   public start (tickSpeed = 500): void {
