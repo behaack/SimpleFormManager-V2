@@ -1,2 +1,2 @@
-import FormManager from './src/CFormManager'
-export default FormManager
+import SimpleFormManagerV2 from './src/CFormManager'
+export default SimpleFormManagerV2

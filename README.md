@@ -60,8 +60,8 @@ export default {
       type="text" 
     />
     <!-- 
-      Note: We can disenable the submit button if there is an error
-      in one or more of the field, if the field values are unchanged
+      Note: We can disable the submit button if there is an error
+      in one or more of the fields or if the form values are unchanged
     -->     
     <input 
       type="submit" 

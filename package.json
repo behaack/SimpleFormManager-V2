@@ -1,35 +1,32 @@
 {
   "name": "simple-form-manager-v2",
-  "version": "1.0.5",
+  "version": "1.0.11",
   "description": "Simple form Manager V2",
-  "main": "index.ts",
+  "main": "index.js",
   "private": false,
   "license": "MIT",
-  "author": "Bill Haack",
+  "author": "bhaack360",
+  "scripts": {
+    "pub": "cd dist & npm publish",
+    "build": "tsc",
+    "test": "echo \"No test specified\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5"
+  },
+  "publishConfig": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/behaack/SimpleFormManager-V2"
+    "url": "https://github.com/behaack/SimpleFormManager-V2"
   },
+  "homepage": "https://github.com/behaack/SimpleFormManager-V2#readme",
   "keywords": [
     "Form Managagement",
     "Vue",
     "React",
     "Angular",
     "Svelte"
-  ],
-  "publishConfig": {
-
-  },  
-  "homepage": "https://github.com/behaack/SimpleFormManager-V2#readme",
-  "scripts": {
-    "pub": "cd dist & npm publish",
-    "build": "webpack"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "ts-loader": "^9.2.3",
-    "typescript": "^4.3.5",
-    "webpack": "^5.45.1",
-    "webpack-cli": "^4.7.2"
-  }
+  ]
 }
