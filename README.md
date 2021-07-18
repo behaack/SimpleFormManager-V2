@@ -169,9 +169,8 @@ fn(valueToBeValidated) => { return boolean }
 fn(valueToBeValidated => fn2 => (parameters...) => { return boolean })
 ```
 You may use write your own validaiton function or you can import 3rd-party validators from npm. An excellent libray I use comes from vuelidate.
-
-##FormManagerV2 Methods
-###constructor(formSchema): void
+## FormManagerV2 Methods
+### constructor(formSchema): void
 <b>Return value:</b> None
 <b>Parameters:</b>
 <b>formSchema (javascript object):</b> See a detailed description above in the section entitled Form Schema Explained
@@ -183,7 +182,7 @@ import myFormSchema from './src/form-schemas/loginFormSchema.js'
 const fm = new FM(loginFormSchema.js)
 ```
 
-###start(tickSpeed): void
+### start(tickSpeed): void
 <b>Return value:</b> None
 <b>Parameters:</b>
 <b>tickSpeed (integer; optional, default is 500):</b> Frequncy, in milliseconds, with which form is scanned for changes. This will determine how responsive the form is to user input.
@@ -194,7 +193,7 @@ const fm = new FM(loginFormSchema.js)
  // starts tracking user input with a frequency of 1 second
 fm.start(1000)
 ````
-###stop(): void
+### stop(): void
 <b>Return value:</b> None
 <b>Parameters:</b> None
 <b>Description: </b>Stops Simple Field Manager V2 from tracking user input. Internally User Manager. It is highly recommented that you issue a stop on field manager after each start to avoid memory leaks.
@@ -203,8 +202,7 @@ fm.start(1000)
 // starts tracking user input with a frequency of 1 second
 fm.stop() 
 ````
-
-###onBlur(fieldName): void
+### onBlur(fieldName): void
 <b>Return value:</b> None
 <b>Parameters:</b> 
 <b>fieldName (string): </b>The name of the field provided in the Form Schema
@@ -215,7 +213,7 @@ fm.stop()
 fm.onBlur('password') 
 ````
 
-###toggleValidationNode(fieldName, validationRule, value): void
+### toggleValidationNode(fieldName, validationRule, value): void
 <b>Return value:</b> None
 <b>Parameters:</b> 
 <b>fieldName (string): </b>A string representing the name of the field provided in the Form Schema
@@ -229,7 +227,7 @@ Use this function to true on and off validation rules established in the Form Sc
 fm.toggleValidationNode('socialSecurityNumber', 'required', false) 
 ````
 
-###showFieldError(fieldName): boolean
+### showFieldError(fieldName): boolean
 <b>Return value:</b> boolean
 <b>Parameters:</b> 
 <b>fieldName: </b>A string representing the name of the field provided in the Form Schema
@@ -240,11 +238,12 @@ fm.toggleValidationNode('socialSecurityNumber', 'required', false)
 fm.showFieldError('password') 
 ````
 
-###resetForm(): void
+### resetForm(): void
 <b>Return value:</b> none
 <b>Parameters:</b> none
 <b>Description: </b>Resets the form and and the field atributes for the fields, while preserving the field values. 
 <b>Usage</b>
+
 ````javascript
 //
 // Values before resetting the form
@@ -318,12 +317,13 @@ console.log(fm.form)
 }
 ````
 
-###resetField(fieldName): void
+### resetField(fieldName): void
 <b>Return value:</b> none
 <b>Parameters:</b> 
 <b>fieldName: </b>A string representing the name of the field provided in the Form Schema
 <b>Description: </b>Resets the field atributes for the field provided in fieldName, while preserving the field value. 
 <b>Usage</b>
+
 ````javascript
 console.log(fm.fields.userName)
 // returns
@@ -349,10 +349,11 @@ console.log(fm.fields.userName)
 }
 ````
 
-##FormManager Properties
-###running: boolean (readonly)
+## FormManager Properties
+### running: boolean (readonly)
 <b>Description: </b> This value is set by the methods start() and stop(). 
 <b>Usage</b>
+
 ````javascript
 fm.start()
 console.log(fm.running)
@@ -360,7 +361,7 @@ console.log(fm.running)
 true
 ````
 
-###fields: javascript object (read | write)
+### fields: javascript object (read | write)
 <b>Description: </b> A collection of javascript field objects, as determined by the Field Schema. For each field porvided by the Form Scheme, there are the following sub-properties:
 - value: any
 - dirty: boolean 
@@ -370,6 +371,7 @@ true
 - errorMessage: string
 
 <b>Usage</b>
+
 ````javascript
 // Read Example
 console.log(fm.fields)
@@ -398,6 +400,7 @@ fm.fields.userName.value = 'johnDoe'
 fm.fields.phoneNumber.value = '999-999-1212'
 fm.start()
 ````
+
 ````html
 <!-- 
 Vue JS: Databinding to field object 'fm.fields.userName.value'
@@ -429,9 +432,10 @@ render(){
   )
 }
 ````
+
 Though these properties are read/write, with the exception of <em>orginalValue</em>, <em>value</em>, Form Manager will overwrite your changes (if it is running) with the tickSpeed provided at start(). As such, you will only ever want to directly update <em>value</em>
 
-###form: javascript object (readonly)
+### form: javascript object (readonly)
 <b>Description: </b> A javascript field object representing the status of the form. The properties of this form object are:
 - dirty: boolean
 - touched: boolean
@@ -447,9 +451,11 @@ console.log(fm.form)
   "touched": true
 }
 ````
-###formSubmittable: boolean (readonly)
+
+### formSubmittable: boolean (readonly)
 <b>Description: </b> A helper property that it true if the form is both 'dirty' and 'valid', otherwise it is set to false
-<b>Usage</b>
+<b>Usage:</b>
+
 ````javascript
 // ********************
 // **** Example #1 ****
@@ -479,12 +485,13 @@ console.log(fm.formSubmittable)
  // returns
  true
 ````
-  
-###fieldScheme: javascript object (readonly)
+
+### fieldScheme: javascript object (readonly)
 <b>Description: </b> A collection of javascript field objects as determined by the Field Schema that was provider in the constructor at instantiation.
 
 <b>Usage</b>
-```javascript
+
+````javascript
 import FM from 'simple-form-manager-v2'
 import myFormSchema from './src/form-schemas/myFormSchema.js'
 const fm = new FM(myFieldSchema)
@@ -509,9 +516,9 @@ fm.toggleValidationNode('userName', 'required', false)
     }
   }
 }
-```
+````
 
-###data: javascript object (readonly)
+### data: javascript object (readonly)
 <b>Description: </b> A collection of javascript field objects, as determined by the Field Schema that represents the values of each field provided.
 <b>Usage</b>
 ````javascript
@@ -530,7 +537,7 @@ console.log(fm.data)
 }
 ````
 
-###all: javascript object (readonly)
+### all: javascript object (readonly)
 <b>Description: </b> A collection of all of the javascript objects listed above: 
 - fields
 - scheme
