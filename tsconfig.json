@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "noImplicitAny": true,
     "sourceMap": true,
     "declaration": true,
