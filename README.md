@@ -197,7 +197,7 @@ fn(valueToBeValidated) => { return boolean }
 fn(valueToBeValidated => fn2 => (parameters...) => { return boolean })
 ```
 You may use write your own validaiton function or you can import 3rd-party validators from npm. An excellent libray I use comes from vuelidate.
-## FormManagerV2 Methods
+## Simple Form Manager V2 Methods
 #### constructor(formSchema): void
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b>
@@ -390,7 +390,7 @@ console.log(fm.fields.userName)
 }
 ````
 
-## FormManager Properties
+## Simple Form Manager V2 Properties
 ### running: boolean (readonly)
 ###### <b>Description: </b> This value is set by the methods start() and stop(). 
 ###### <b>Usage</b>
