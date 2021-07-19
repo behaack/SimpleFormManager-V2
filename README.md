@@ -1,10 +1,12 @@
 # Simple Form Manager V2
 
-Simple Form Manager is a javascript class you can use to manage your html forms.  It can be used with Angular, React, Vue or any other javascript library for framework. It is also built to be unopinionated about what UI components you use. Use it with plain old html controls or use it with any one of the dozens of UI components available to you. 
+Simple Form Manager V2 (SFMv2) is a javascript class you can use to manage your html forms.  It can be used with Angular, React, Vue or any other javascript library for framework. Good form management requires an an tremendous amount boilerplate and redundant code to manage state, and validate user input. Most solutions are complicated, highly opinionated and tend to be framework.
 
-Simple Form Manager does not takeover your forms or shroud your forms in obscurity so you do not understand what is happening to your data, FormManager is lightweight, simple and is easy to reason about.
+SFMv2 can be usued with any one of the dozens of UI components available to you. Simple Form Manager does not takeover your forms or shroud your forms in obscurity so you do not understand what is happening to your data, SFMv2 is lightweight, simple and is easy to reason about. SFMv2 internal objects are fully exposed to you, the developer, so you can see what is going with your data. 
 
-Unlike with the first version of Simple Form Manager, this version does not require you to put a wrapper around your components for it to work. With Simple Form Manager V2 you just wire you component it and it works!
+SFMv2 is a complete re-write of the orginial Simple Form Manager and has a completely different interface. Unlike the original version of Simple Form Manager, this version does not <em>require</em> you to put a wrapper around your components for it to work. With Simple Form Manager V2 you just wire your components it, and it works!
+
+SFM and SFMv2 are inspired by Vuelidate, the excellent form validation system written for Vue.
 
 ## Installation
 ```
@@ -17,23 +19,25 @@ yarn add simple-form-manager-v2
 
 ## Simple Form Manager V2 Interface Summary
 ### Properties
-#### fields: object,
-#### fieldScheme: readonly object
-#### form: readonly object,
-#### data: readonly object,
-#### all: readonly object,
-#### formSubmittable: readonly boolean  
-#### running: readonly boolean
+###### fields: object,
+###### fieldScheme: readonly object
+###### form: readonly object,
+###### data: readonly object,
+###### all: readonly object,
+###### formSubmittable: readonly boolean  
+###### running: readonly boolean
 
 ### Methods
-#### toggleValidationNode(fieldName: string, validator: any, value: any: void
-#### resetForm(): void
-#### resetField(fieldName: string): void
-#### showFieldError(fieldName: string): boolean
-#### onBlur(fieldName: string): void
-#### onUpdateValue(fieldName: string, value: any): void
-#### start(tickSpeed: number): void
-#### stop(): void
+###### toggleValidationNode(fieldName: string, validator: any, value: any: void
+###### resetForm(): void
+###### resetField(fieldName: string): void
+###### showFieldError(fieldName: string): boolean
+###### onBlur(fieldName: string): void
+###### onUpdateValue(fieldName: string, value: any): void
+###### start(tickSpeed: number): void
+###### stop(): void
+
+A full description of these properties and method can be foundfuther down in this document.
 
 ## Usage (Getting started)
 Instantiate Simple Form Manager V2
@@ -195,11 +199,11 @@ fn(valueToBeValidated => fn2 => (parameters...) => { return boolean })
 You may use write your own validaiton function or you can import 3rd-party validators from npm. An excellent libray I use comes from vuelidate.
 ## FormManagerV2 Methods
 #### constructor(formSchema): void
-##### <b>Return value:</b> None
-##### <b>Parameters:</b>
-##### <b>formSchema (javascript object):</b> See a detailed description above in the section entitled Form Schema Explained
-##### <b>Description: </b>Instantiates Simple Form Manager V2 object
-##### <b>Usage</b>
+###### <b>Return value:</b> None
+###### <b>Parameters:</b>
+###### <b>formSchema (javascript object):</b> See a detailed description above in the section entitled Form Schema Explained
+###### <b>Description: </b>Instantiates Simple Form Manager V2 object
+###### <b>Usage</b>
 ```javascript
 import FM from 'simple-form-manager-v2'
 import myFormSchema from './src/form-schemas/loginFormSchema.js'
@@ -207,57 +211,57 @@ const fm = new FM(loginFormSchema.js)
 ```
 
 ### start(tickSpeed): void
-##### <b>Return value:</b> None
-##### <b>Parameters:</b>
-##### <b>tickSpeed (integer; optional, default is 500):</b> Frequncy, in milliseconds, with which form is scanned for changes. This will determine how responsive the form is to user input.
-##### <b>Description: </b>Starts Form Manager V2 into tracking user input in the form. Before starting Form Manager, field values should first be initialized. On the first tick after start, the orginalValue (see <em>field</em> proprty below) is set to initial value of the field.
-##### <b>Usage</b>
+###### <b>Return value:</b> None
+###### <b>Parameters:</b>
+###### <b>tickSpeed (integer; optional, default is 500):</b> Frequncy, in milliseconds, with which form is scanned for changes. This will determine how responsive the form is to user input.
+###### <b>Description: </b>Starts Form Manager V2 into tracking user input in the form. Before starting Form Manager, field values should first be initialized. On the first tick after start, the orginalValue (see <em>field</em> proprty below) is set to initial value of the field.
+###### <b>Usage</b>
 ````javascript
  // starts tracking user input with a frequency of 1 second
 fm.start(1000)
 ````
 
 ### stop(): void
-##### <b>Return value:</b> None
-##### <b>Parameters:</b> None
-##### <b>Description: </b>Stops Simple Field Manager V2 from tracking user input. Internally User Manager. It is highly recommented that you issue a stop on field manager after each start to avoid memory leaks.
-##### <b>Usage</b>
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> None
+###### <b>Description: </b>Stops Simple Field Manager V2 from tracking user input. Internally User Manager. It is highly recommented that you issue a stop on field manager after each start to avoid memory leaks.
+###### <b>Usage</b>
 ````javascript
 // starts tracking user input with a frequency of 1 second
 fm.stop() 
 ````
 
 ### onBlur(fieldName): void
-##### <b>Return value:</b> None
-##### <b>Parameters:</b> 
-##### <b>fieldName (string): </b>The name of the field provided in the Form Schema
-##### <b>Description: </b>This a helper function to make it easier to set the <em>touched</em> value for the field provided to true. This functions is best used by wiring it to the onBlur event for that field in question. 
-##### <b>Usage</b>
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>Description: </b>This a helper function to make it easier to set the <em>touched</em> value for the field provided to true. This functions is best used by wiring it to the onBlur event for that field in question. 
+###### <b>Usage</b>
 ````javascript
 // sets the touched value for the password field to true
 fm.onBlur('password') 
 ````
 
 ### onUpdateValue(fieldName, value): void
-##### <b>Return value:</b> None
-##### <b>Parameters:</b> 
-##### <b>fieldName (string): </b>The name of the field provided in the Form Schema
-##### <b>value (any): </b>The new value to be assigned to the field referenced by fieldName
-##### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
-##### <b>Usage</b>
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>value (any): </b>The new value to be assigned to the field referenced by fieldName
+###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
+###### <b>Usage</b>
 ````javascript
 // change the value of the 'lastName' field to and empty string (i.e. '')
 fm.onUpdateValue('lastName', '')
 ````
 
 ### toggleValidationNode(fieldName, validationRule, value): void
-##### <b>Return value:</b> None
-##### <b>Parameters:</b> 
-##### <b>fieldName (string): </b>A string representing the name of the field provided in the Form Schema
-##### <b>validationRule (string): </b>A string representing the name of the validation rule provided in the Form Schema
-##### <b>Description: </b>
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>A string representing the name of the field provided in the Form Schema
+###### <b>validationRule (string): </b>A string representing the name of the validation rule provided in the Form Schema
+###### <b>Description: </b>
 Use this function to true on and off validation rules established in the Form Schema. If value is not provided, the rule is toggled, otherwise the rule is set to the value provided.
-##### <b>Usage</b>
+###### <b>Usage</b>
 ````javascript
 // sets the 'required' validation rule for the 'socialSecurityNumber'
 // field to false
@@ -265,21 +269,21 @@ fm.toggleValidationNode('socialSecurityNumber', 'required', false)
 ````
 
 ### showFieldError(fieldName): boolean
-##### <b>Return value:</b> boolean
-##### <b>Parameters:</b> 
-##### <b>fieldName: </b>A string representing the name of the field provided in the Form Schema
-##### <b>Description: </b>This a helper function which return true if the field is both invalid and has been touched (i.e. has recieved and lost focus). 
-##### <b>Usage</b>
+###### <b>Return value:</b> boolean
+###### <b>Parameters:</b> 
+###### <b>fieldName: </b>A string representing the name of the field provided in the Form Schema
+###### <b>Description: </b>This a helper function which return true if the field is both invalid and has been touched (i.e. has recieved and lost focus). 
+###### <b>Usage</b>
 ````javascript
 // return true if the 'password' field is both invalid and touched
 fm.showFieldError('password') 
 ````
 
 ### resetForm(): void
-##### <b>Return value:</b> none
-##### <b>Parameters:</b> none
-##### <b>Description: </b>Resets the form and and the field atributes for the fields, while preserving the field values. 
-##### <b>Usage</b>
+###### <b>Return value:</b> none
+###### <b>Parameters:</b> none
+###### <b>Description: </b>Resets the form and and the field atributes for the fields, while preserving the field values. 
+###### <b>Usage</b>
 
 ````javascript
 //
@@ -355,11 +359,11 @@ console.log(fm.form)
 ````
 
 ### resetField(fieldName): void
-##### <b>Return value:</b> none
-##### <b>Parameters:</b> 
-##### <b>fieldName: </b>A string representing the name of the field provided in the Form Schema
-##### <b>Description: </b>Resets the field atributes for the field provided in fieldName, while preserving the field value. 
-##### <b>Usage</b>
+###### <b>Return value:</b> none
+###### <b>Parameters:</b> 
+###### <b>fieldName: </b>A string representing the name of the field provided in the Form Schema
+###### <b>Description: </b>Resets the field atributes for the field provided in fieldName, while preserving the field value. 
+###### <b>Usage</b>
 
 ````javascript
 console.log(fm.fields.userName)
@@ -388,8 +392,8 @@ console.log(fm.fields.userName)
 
 ## FormManager Properties
 ### running: boolean (readonly)
-##### <b>Description: </b> This value is set by the methods start() and stop(). 
-##### <b>Usage</b>
+###### <b>Description: </b> This value is set by the methods start() and stop(). 
+###### <b>Usage</b>
 
 ````javascript
 fm.start()
@@ -399,7 +403,7 @@ true
 ````
 
 ### fields: javascript object (read | write)
-##### <b>Description: </b> A collection of javascript field objects, as determined by the Field Schema. For each field porvided by the Form Scheme, there are the following sub-properties:
+###### <b>Description: </b> A collection of javascript field objects, as determined by the Field Schema. For each field porvided by the Form Scheme, there are the following sub-properties:
 - value: any
 - dirty: boolean 
 - touched: boolean
@@ -407,7 +411,7 @@ true
 - valid: boolean
 - errorMessage: string
 
-##### <b>Usage</b>
+###### <b>Usage</b>
 
 ````javascript
 // Read Example
@@ -473,12 +477,12 @@ render(){
 Though these properties are read/write, with the exception of <em>orginalValue</em>, <em>value</em>, Form Manager will overwrite your changes (if it is running) with the tickSpeed provided at start(). As such, you will only ever want to directly update <em>value</em>
 
 ### form: javascript object (readonly)
-##### <b>Description: </b> A javascript field object representing the status of the form. The properties of this form object are:
+###### <b>Description: </b> A javascript field object representing the status of the form. The properties of this form object are:
 - dirty: boolean
 - touched: boolean
 - valid: boolean
 
-##### <b>Usage</b>
+###### <b>Usage</b>
 ````javascript
 console.log(fm.form)
 ///returns (example)
@@ -490,8 +494,8 @@ console.log(fm.form)
 ````
 
 ### formSubmittable: boolean (readonly)
-##### <b>Description: </b> A helper property that it true if the form is both 'dirty' and 'valid', otherwise it is set to false
-##### <b>Usage:</b>
+###### <b>Description: </b> A helper property that it true if the form is both 'dirty' and 'valid', otherwise it is set to false
+###### <b>Usage:</b>
 
 ````javascript
 // ********************
@@ -524,9 +528,9 @@ console.log(fm.formSubmittable)
 ````
 
 ### fieldScheme: javascript object (readonly)
-##### <b>Description: </b> A collection of javascript field objects as determined by the Field Schema that was provider in the constructor at instantiation.
+###### <b>Description: </b> A collection of javascript field objects as determined by the Field Schema that was provider in the constructor at instantiation.
 
-##### <b>Usage</b>
+###### <b>Usage</b>
 
 ````javascript
 import FM from 'simple-form-manager-v2'
@@ -556,8 +560,8 @@ fm.toggleValidationNode('userName', 'required', false)
 ````
 
 ### data: javascript object (readonly)
-##### <b>Description: </b> A collection of javascript field objects, as determined by the Field Schema that represents the values of each field provided.
-##### <b>Usage</b>
+###### <b>Description: </b> A collection of javascript field objects, as determined by the Field Schema that represents the values of each field provided.
+###### <b>Usage</b>
 ````javascript
 import FM from 'simple-form-manager-v2'
 import myFormSchema from './src/form-schemas/myFormSchema.js'
@@ -575,7 +579,7 @@ console.log(fm.data)
 ````
 
 ### all: javascript object (readonly)
-##### <b>Description: </b> A collection of all of the javascript objects listed above: 
+###### <b>Description: </b> A collection of all of the javascript objects listed above: 
 - fields
 - scheme
 - form
