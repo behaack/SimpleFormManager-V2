@@ -37,7 +37,7 @@ yarn add simple-form-manager-v2
 ###### start(tickSpeed: number): void
 ###### stop(): void
 
-A full description of these properties and method can be foundfuther down in this document.
+A full description of these properties and methods can be found futher down in this document.
 
 ## Usage (Getting started)
 Instantiate Simple Form Manager V2
