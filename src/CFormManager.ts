@@ -104,7 +104,7 @@ export default class CFormManager implements IFormManager {
   public onBlur(fieldName: string): void {
     setTimeout(() => {
       this.fields[fieldName].touched = true
-    }, 250)
+    }, 300)
   }
 
   public onUpdateValue(fieldName: string, value: any) {

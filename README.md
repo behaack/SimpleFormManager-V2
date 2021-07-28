@@ -34,6 +34,7 @@ yarn add simple-form-manager-v2
 ###### showFieldError(fieldName: string): boolean
 ###### onBlur(fieldName: string): void
 ###### onUpdateValue(fieldName: string, value: any): void
+###### onUpdateObjectValue(fieldName: string, value: any): void
 ###### start(tickSpeed: number): void
 ###### stop(): void
 
@@ -246,12 +247,28 @@ fm.onBlur('password')
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b> 
 ###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
-###### <b>value (any): </b>The new value to be assigned to the field referenced by fieldName
+###### <b>value (any): </b>The new value to be assigned to 'value' property of the field referenced by fieldName
 ###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
 ###### <b>Usage</b>
 ````javascript
 // change the value of the 'lastName' field to and empty string (i.e. '')
 fm.onUpdateValue('lastName', '')
+````
+
+### onUpdateObjectValue(fieldName, value): void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>value (any): </b>The new value to be assigned to the 'objectValue' property field referenced by fieldName. The object value property is helpful for holding an object returned by dropdown
+###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
+###### <b>Usage</b>
+````javascript
+// change the value of the 'lastName' field to and empty string (i.e. '')
+fm.onUpdateModelValue('countryCode', { 
+  countryCode: 'CH', 
+  countryName: 'Switzerland',
+  capital: 'Bern'
+})
 ````
 
 ### toggleValidationNode(fieldName, validationRule, value): void
