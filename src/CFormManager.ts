@@ -102,11 +102,17 @@ export default class CFormManager implements IFormManager {
   }  
 
   public onBlur(fieldName: string): void {
-    this.fields[fieldName].touched = true
+    setTimeout(() => {
+      this.fields[fieldName].touched = true
+    }, 250)
   }
 
   public onUpdateValue(fieldName: string, value: any) {
     this.fields[fieldName].value = value
+  }
+
+  public onUpdateObjectValue(fieldName: string, value: any) {
+    this.fields[fieldName].objectValue = value
   }
 
   public start (tickSpeed = 500): void {
@@ -246,6 +252,7 @@ export default class CFormManager implements IFormManager {
           dirty: false,
           touched: false,
           value: null,
+          objectValue: null,
           originalValue: null,
           valid: true,
           errorMessage: ''
