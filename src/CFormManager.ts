@@ -143,11 +143,13 @@ export default class CFormManager implements IFormManager {
     if (fieldValidators) {
       Object.keys(fieldValidators).forEach((v) => {
         if (v === validator || !validator) {
-          fieldValidators[v].valid = (value === undefined) ? !fieldValidators[v].valid : value
+          if (fieldValidators[v].isActive) {
+            fieldValidators[v].valid = (value === undefined) ? !fieldValidators[v].valid : value
+            this.validateField(fieldName, true)
+          }
         }
       })
     }
-    this.validateField(fieldName, true)
 	};  
 
   public toggleValidationNode (fieldName: string, validator: any = undefined, value: any = undefined): void {
@@ -211,17 +213,12 @@ export default class CFormManager implements IFormManager {
     let errorMessage = ''
     if (fieldValidators) {
       Object.keys(fieldValidators).forEach((e) => {
-        if (fieldValidators[e].validator) {
-          if (fieldValidators[e].isActive) {
-            if (fieldValidators[e].validator === null) {
-              return
-            }
-            const result = fieldValidators[e].validator(this.fields[fieldName].value)
-            if (!result) {
-              isValid = false
-              if (fieldValidators[e].errorMessage) {
-                errorMessage = fieldValidators[e].errorMessage
-              }
+        if (fieldValidators[e].isActive) {
+          const result = (fieldValidators[e].validator === null) ? fieldValidators[e].valid : fieldValidators[e].validator(this.fields[fieldName].value)
+          if (!result) {
+            isValid = false
+            if (fieldValidators[e].errorMessage) {
+              errorMessage = fieldValidators[e].errorMessage
             }
           }
         }
