@@ -29,6 +29,7 @@ yarn add simple-form-manager-v2
 
 ### Methods
 ###### toggleValidationNode(fieldName: string, validator: any, value: any: void
+###### setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
 ###### resetForm(): void
 ###### resetField(fieldName: string): void
 ###### showFieldError(fieldName: string): boolean
@@ -236,7 +237,7 @@ fm.stop()
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b> 
 ###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
-###### <b>Description: </b>This a helper function to make it easier to set the <em>touched</em> value for the field provided to true. This functions is best used by wiring it to the onBlur event for that field in question. 
+###### <b>Description: </b>This a helper function to make it easier to set the <em>touched</em> value for the field provided to true. This method is best used by wiring it to the onBlur event for that field in question. 
 ###### <b>Usage</b>
 ````javascript
 // sets the touched value for the password field to true
@@ -248,11 +249,39 @@ fm.onBlur('password')
 ###### <b>Parameters:</b> 
 ###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
 ###### <b>value (any): </b>The new value to be assigned to 'value' property of the field referenced by fieldName
-###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
+###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This method is best used by wiring it to the onChange event for that field in question. 
 ###### <b>Usage</b>
 ````javascript
 // change the value of the 'lastName' field to and empty string (i.e. '')
 fm.onUpdateValue('lastName', '')
+````
+
+### setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>validator (string): </b>The name of the validator provided in the Form Schema
+###### <b>value (boolean): </b>The new value to be assigned to the 'valid' status of the validator 
+###### <b>Description: </b>There are times when the validation criteria for a field requires more information than is contained within the field itself. An example of this is a Password form with a Password and a Password confirmation field. This method allows you to calculate the validation status of a field and set the validation value.
+###### <b>Usage</b>
+````javascript
+const formScheme = {
+  password: {
+    required: {
+      validator: required,
+      message: 'Password is required'
+    }
+  },
+  confirmationPassword: {
+    matchesPassword: {
+      validator: null, // No validator, this is handled outside of Form Manager
+      message: 'Password and Confirmation Password do not match'
+    }
+  }  
+}
+
+// change the 'valid' status of the 'confirmationPassword' to false
+fm.setFieldValidationStatus('confirmationPassword', 'matchesPassword', false)
 ````
 
 ### onUpdateObjectValue(fieldName, value): void

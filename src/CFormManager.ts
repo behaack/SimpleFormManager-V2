@@ -21,6 +21,7 @@ export interface IFormManager {
   all: IAll,
   formSubmittable: boolean  
   running: boolean
+  setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
   toggleValidationNode: (fieldName: string, validator: any, value: any) => void
   resetForm: () => void
   resetField: (fieldName: string) => void
@@ -137,6 +138,18 @@ export default class CFormManager implements IFormManager {
     clearInterval(this.valuePoll)
   }
 
+	 public setFieldValidationStatus = (fieldName: string, validator: string, value: boolean) => {
+    const fieldValidators = this.scheme[fieldName]
+    if (fieldValidators) {
+      Object.keys(fieldValidators).forEach((v) => {
+        if (v === validator || !validator) {
+          fieldValidators[v].valid = (value === undefined) ? !fieldValidators[v].valid : value
+        }
+      })
+    }
+    this.validateField(fieldName, true)
+	};  
+
   public toggleValidationNode (fieldName: string, validator: any = undefined, value: any = undefined): void {
     const fieldValidators = this.scheme[fieldName]
     if (fieldValidators) {
@@ -200,6 +213,9 @@ export default class CFormManager implements IFormManager {
       Object.keys(fieldValidators).forEach((e) => {
         if (fieldValidators[e].validator) {
           if (fieldValidators[e].isActive) {
+            if (fieldValidators[e].validator === null) {
+              return
+            }
             const result = fieldValidators[e].validator(this.fields[fieldName].value)
             if (!result) {
               isValid = false
