@@ -30,6 +30,7 @@ yarn add simple-form-manager-v2
 ### Methods
 ###### toggleValidationNode(fieldName: string, validator: any, value: any: void
 ###### setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
+###### setFieldStatus: (fieldName: string, isValid: boolean, errorMsg: string) => void
 ###### resetForm(): void
 ###### resetField(fieldName: string): void
 ###### showFieldError(fieldName: string): boolean
@@ -281,7 +282,20 @@ const formScheme = {
 }
 
 // change the 'valid' status of the 'confirmationPassword' to false
-fm.setFieldValidationStatus('confirmationPassword', 'matchesPassword', false)
+fm.setFieldStatus('confirmationPassword', 'matchesPassword', false)
+````
+
+### setFieldStatus: (fieldName: string, isValid: boolean, errorMsg: string) => void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>isValid (boolean): </b>The validation status of the field
+###### <b>errorMsg (string): </b>The error message to be displayed if the field is not valid 
+###### <b>Description: </b>Sets the validation status of a field to true or false. If the field is not valid, the error message is also set.
+###### <b>Usage</b>
+````javascript
+// change the 'valid' status of the 'confirmationPassword' to false
+fm.setFieldStatus('confirmationPassword', false, 'Password and Confirmation Password do not match')
 ````
 
 ### onUpdateObjectValue(fieldName, value): void

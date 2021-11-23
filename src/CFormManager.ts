@@ -22,6 +22,7 @@ export interface IFormManager {
   formSubmittable: boolean  
   running: boolean
   setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
+  setFieldStatus: (fieldName: string, isValid: boolean, errorMsg: string) => void
   toggleValidationNode: (fieldName: string, validator: any, value: any) => void
   resetForm: () => void
   resetField: (fieldName: string) => void
@@ -138,7 +139,7 @@ export default class CFormManager implements IFormManager {
     clearInterval(this.valuePoll)
   }
 
-	 public setFieldValidationStatus = (fieldName: string, validator: string, value: boolean) => {
+	 public setFieldValidationStatus = (fieldName: string, validator: string, value: boolean): void => {
     const fieldValidators = this.scheme[fieldName]
     if (fieldValidators) {
       Object.keys(fieldValidators).forEach((v) => {
@@ -150,7 +151,14 @@ export default class CFormManager implements IFormManager {
         }
       })
     }
-	};  
+	}
+
+  public setFieldStatus (fieldName: string, isValid: boolean, errorMsg: string): void {
+    const field = this.fields[fieldName]
+    field.valid = isValid
+    field.errorMessage = errorMsg
+    this.updateFormStatus()
+  }
 
   public toggleValidationNode (fieldName: string, validator: any = undefined, value: any = undefined): void {
     const fieldValidators = this.scheme[fieldName]
@@ -165,7 +173,7 @@ export default class CFormManager implements IFormManager {
   }
 
   public resetForm (): void {
-    const spreed = this.iTickSpeed
+    const speed = this.iTickSpeed
     const running = this.running
     if (running) { this.stop() }
     this.fieldNameArray.forEach((fieldName) => {
@@ -174,7 +182,7 @@ export default class CFormManager implements IFormManager {
       this.fields[fieldName].originalValue = this.fields[fieldName].value
     })
     this.updateFormStatus()
-    if (running) { this.start(spreed) }
+    if (running) { this.start(speed) }
   }
 
   public resetField (fieldName: string): void {
