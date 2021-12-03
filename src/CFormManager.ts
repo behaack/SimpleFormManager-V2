@@ -22,7 +22,7 @@ export interface IFormManager {
   formSubmittable: boolean  
   running: boolean
   setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
-  setFieldStatus: (fieldName: string, isValid: boolean, errorMsg: string) => void
+  setFieldStatus: (fieldName: string, manualOverride: boolean, isValid: boolean, errorMsg: string) => void
   toggleValidationNode: (fieldName: string, validator: any, value: any) => void
   resetForm: () => void
   resetField: (fieldName: string) => void
@@ -127,7 +127,9 @@ export default class CFormManager implements IFormManager {
       this.fieldNameArray.forEach((fieldName) => {
         const field = this.fields[fieldName]
         field.dirty = (field.originalValue !== field.value)
-        this.validateField(fieldName, false)
+        if (!field.manualOverride) {
+          this.validateField(fieldName, false)
+        }
       })
       this.updateFormStatus()
     }, tickSpeed)
@@ -153,11 +155,16 @@ export default class CFormManager implements IFormManager {
     }
 	}
 
-  public setFieldStatus (fieldName: string, isValid: boolean, errorMsg: string): void {
+  public setFieldStatus (fieldName: string, manualOverride: boolean, isValid: boolean, errorMsg: string): void {
+    this.validateField(fieldName, false)
     const field = this.fields[fieldName]
-    field.valid = isValid
-    field.errorMessage = errorMsg
-    this.updateFormStatus()
+    const isSame = (field.isValid === isValid)
+    field.manualOverride = manualOverride
+    if (!isSame && field.valid) {
+      field.valid = isValid
+      field.errorMessage = errorMsg
+      this.updateFormStatus()
+    }
   }
 
   public toggleValidationNode (fieldName: string, validator: any = undefined, value: any = undefined): void {
@@ -270,6 +277,7 @@ export default class CFormManager implements IFormManager {
       fields = {
         ...fields,
         [fieldName]: {
+          manualOverride: false,
           dirty: false,
           touched: false,
           value: null,
