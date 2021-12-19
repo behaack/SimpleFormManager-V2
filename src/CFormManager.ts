@@ -29,7 +29,7 @@ export interface IFormManager {
   showFieldError: (fieldName: string) => boolean
   onBlur: (fieldName: string) => void
   onUpdateValue: (fieldName: string, value: any) => void
-  start: (tickSpeed: number) => void
+  start: (tickSpeed: number, preserve: boolean) => void
   stop: () => void
 }
 
@@ -117,11 +117,13 @@ export default class CFormManager implements IFormManager {
     this.fields[fieldName].objectValue = value
   }
 
-  public start (tickSpeed = 500): void {
+  public start (tickSpeed = 500, preserve = false): void {
     this.iTickSpeed = tickSpeed
     this.isRunning = true
     this.fieldNameArray.forEach((fieldName) => {
-      this.fields[fieldName].originalValue = this.fields[fieldName].value
+      if (!preserve) {
+        this.fields[fieldName].originalValue = this.fields[fieldName].value
+      }
     })    
     this.valuePoll = setInterval(() => {
       this.fieldNameArray.forEach((fieldName) => {
