@@ -204,7 +204,7 @@ export default class CFormManager implements IFormManager {
   public setValidator (fieldName: string, validator: string, validatorFunc: any): void {
     const field = this.scheme[fieldName]
     if (field) {
-      const validator = field[validator].validator = validatorFunc
+      field[validator].validator = validatorFunc
     }
   }
 
