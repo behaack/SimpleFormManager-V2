@@ -5,7 +5,7 @@ export interface IForm {
 }
 
 export interface IAll {
-  form: IForm,
+  form: IForm
   running: boolean
   tickSpeed: number
   scheme: any
@@ -14,11 +14,11 @@ export interface IAll {
 }
 
 export interface IFormManager {
-  fields: any,
+  fields: any
   fieldScheme: any
-  form: IForm,
-  data: any,
-  all: IAll,
+  form: IForm
+  data: any
+  all: IAll
   formSubmittable: boolean  
   running: boolean
   setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
@@ -31,6 +31,7 @@ export interface IFormManager {
   onUpdateValue: (fieldName: string, value: any) => void
   start: (tickSpeed: number, preserve: boolean) => void
   stop: () => void
+  setValidator: (fieldName: string, validator: string, validatorFunc: any) => void
 }
 
 export default class CFormManager implements IFormManager {
@@ -198,6 +199,13 @@ export default class CFormManager implements IFormManager {
     this.fields[fieldName].dirty = false
     this.fields[fieldName].touched = false
     this.fields[fieldName].originalValue = this.fields[fieldName].value
+  }
+
+  public setValidator (fieldName: string, validator: string, validatorFunc: any): void {
+    const field = this.scheme[fieldName]
+    if (field) {
+      const validator = field[validator].validator = validatorFunc
+    }
   }
 
   // ********************
