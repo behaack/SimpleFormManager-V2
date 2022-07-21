@@ -27,6 +27,11 @@ export interface IFormManager {
   resetForm: () => void
   resetField: (fieldName: string) => void
   showFieldError: (fieldName: string) => boolean
+  setTouched: (fieldName: string, value: boolean) => void
+  setValue: (fieldName: string, value: any) => void
+  setValues: (value: any) => void
+  setObjectValue: (fieldName: string, value: any) => void
+  onUpdateObjectValue: (fieldName: string, value: any) => void
   onBlur: (fieldName: string) => void
   onUpdateValue: (fieldName: string, value: any) => void
   start: (tickSpeed: number, preserve: boolean) => void
@@ -107,16 +112,36 @@ export default class CFormManager implements IFormManager {
   public onBlur(fieldName: string): void {
     setTimeout(() => {
       this.fields[fieldName].touched = true
-    }, 300)
+    }, 50)
   }
 
-  public onUpdateValue(fieldName: string, value: any) {
+  public onUpdateValue(fieldName: string, value: any): void {
     this.fields[fieldName].value = value
   }
 
-  public onUpdateObjectValue(fieldName: string, value: any) {
+  public onUpdateObjectValue(fieldName: string, value: any): void {
     this.fields[fieldName].objectValue = value
   }
+
+  public setTouched(fieldName: string, value: boolean = true): void {
+      this.fields[fieldName].touched = true
+  }
+
+  public setValue(fieldName: string, value: any): void {
+    this.fields[fieldName].value = value
+  }
+
+  public setObjectValue(fieldName: string, value: any): void {
+    this.fields[fieldName].objectValue = value
+  }
+  
+  public setValues(values: { [key: string]: object}): void {
+    this.fieldNameArray.forEach((fieldName: string) => {
+      if (fieldName in values) {
+        this.fields[fieldName].value = values[fieldName]
+      }
+    })        
+  }  
 
   public start (tickSpeed = 500, preserve = false): void {
     this.iTickSpeed = tickSpeed

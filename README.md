@@ -28,17 +28,22 @@ yarn add simple-form-manager-v2
 ###### running: readonly boolean
 
 ### Methods
+###### start(tickSpeed: number): void
+###### stop(): void
 ###### toggleValidationNode(fieldName: string, validator: any, value: any: void
 ###### setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
 ###### setFieldStatus: (fieldName: string, isValid: boolean, errorMsg: string) => void
 ###### resetForm(): void
 ###### resetField(fieldName: string): void
 ###### showFieldError(fieldName: string): boolean
-###### onBlur(fieldName: string): void
-###### onUpdateValue(fieldName: string, value: any): void
-###### onUpdateObjectValue(fieldName: string, value: any): void
-###### start(tickSpeed: number): void
-###### stop(): void
+###### setValue(fieldName: string, value: any): void
+###### setTouched(fieldName: string, value: boolean): void
+###### setObjectValue(fieldName: string, value: object): void
+###### setValues(values: object): void
+###### onBlur(fieldName: string): void - DEPRECATED
+###### onUpdateValue(fieldName: string, value: any): void - DEPRECATED
+###### onUpdateObjectValue(fieldName: string, value: any): void - DEPRECATED
+
 
 A full description of these properties and methods can be found futher down in this document.
 
@@ -234,7 +239,65 @@ fm.start(1000)
 fm.stop() 
 ````
 
+### setValue(fieldName, value): void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>value (any): </b>The new value to be assigned to 'value' property of the field referenced by fieldName
+###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This method is best used by wiring it to the onChange event for that field in question. 
+###### <b>Usage</b>
+````javascript
+// change the value of the 'lastName' field to and empty string (i.e. '')
+fm.setTouched('lastName', '')
+````
+
+### setValues(values): void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>values (object): </b>An object containing key-value pairs with the keys matching the field names provided in the Form Schema
+###### <b>Description: </b>This a helper function to make it easier to set the values for the fields provided in the Form Schema. If a field name in the object does not match the field name in the Field Schema, it is ignored.
+###### <b>Usage</b>
+````javascript
+let person = {
+  FirstName: 'Mary',
+  MiddleInitial: 'L',
+  LastName: 'Henderson'
+}
+// sets the values of the fields: FirstName, MiddleInitial & LastName 
+fm.setValues(person)
+````
+
+### setTouched(fieldName, value): void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>value (boolean): </b>Optional - The new value to be assigned to 'touched' property of the field referenced by fieldName. If a value is not provided the default value is true
+###### <b>Description: </b>This a helper function to make it easier to set the <em>touched</em> value for the field provided. This method is best used by wiring it to the onBlur event for that field in question. 
+###### <b>Usage</b>
+````javascript
+// sets the touched value for the password field to true
+fm.setValue('password') 
+````
+
+### setObjectValue(fieldName, value): void
+###### <b>Return value:</b> None
+###### <b>Parameters:</b> 
+###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
+###### <b>value (object): </b>The new value to be assigned to the 'objectValue' property field referenced by fieldName. The object value property is helpful for holding an object returned by dropdown
+###### <b>Description: </b>This a helper function to make it easier to set the <em>value</em> property for the field provided. This functions is best used by wiring it to the onChange event for that field in question. 
+###### <b>Usage</b>
+````javascript
+let country = { 
+  countryCode: 'CH', 
+  countryName: 'Switzerland',
+  capital: 'Bern'
+}
+
+// change the objectValue of the 'countryCode' field to country
+fm.setUpdateModelValue('countryCode', country)
+````
 ### onBlur(fieldName): void
+###### <b>DEPRECATED - replaced by setTouched</b>
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b> 
 ###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
@@ -246,6 +309,7 @@ fm.onBlur('password')
 ````
 
 ### onUpdateValue(fieldName, value): void
+###### <b>DEPRECATED - replaced by setValue</b>
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b> 
 ###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
@@ -299,6 +363,7 @@ fm.setFieldStatus('confirmationPassword', false, 'Password and Confirmation Pass
 ````
 
 ### onUpdateObjectValue(fieldName, value): void
+###### <b>DEPRECATED - replaced by setUpdateObjectValue</b>
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b> 
 ###### <b>fieldName (string): </b>The name of the field provided in the Form Schema
