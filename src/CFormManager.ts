@@ -24,6 +24,7 @@ export interface IFormManager {
   setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
   setFieldStatus: (fieldName: string, manualOverride: boolean, isValid: boolean, errorMsg: string) => void
   toggleValidationNode: (fieldName: string, validator: any, value: any) => void
+  restoreForm: () => void
   resetForm: () => void
   resetField: (fieldName: string) => void
   showFieldError: (fieldName: string) => boolean
@@ -135,15 +136,16 @@ export default class CFormManager implements IFormManager {
     this.fields[fieldName].objectValue = value
   }
   
-  public setValues(values: { [key: string]: object}): void {
+  public setValues(values: object): void {
     this.fieldNameArray.forEach((fieldName: string) => {
       if (fieldName in values) {
+        // @ts-ignore
         this.fields[fieldName].value = values[fieldName]
       }
     })        
   }  
 
-  public start (tickSpeed = 500, preserve = false): void {
+  public start (tickSpeed = 25, preserve = false): void {
     this.iTickSpeed = tickSpeed
     this.isRunning = true
     this.fieldNameArray.forEach((fieldName) => {
@@ -205,6 +207,19 @@ export default class CFormManager implements IFormManager {
       })
     }
     this.validateField(fieldName, true)
+  }
+
+  public restoreForm (): void {
+    const speed = this.iTickSpeed
+    const running = this.running
+    if (running) { this.stop() }
+    this.fieldNameArray.forEach((fieldName) => {
+      this.fields[fieldName].dirty = false
+      this.fields[fieldName].touched = false
+      this.fields[fieldName].value = this.fields[fieldName].originalValue
+    })
+    this.updateFormStatus()
+    if (running) { this.start(speed) }    
   }
 
   public resetForm (): void {

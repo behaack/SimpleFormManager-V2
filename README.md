@@ -33,6 +33,7 @@ yarn add simple-form-manager-v2
 ###### toggleValidationNode(fieldName: string, validator: any, value: any: void
 ###### setFieldValidationStatus: (fieldName: string, validator: string, value: boolean) => void
 ###### setFieldStatus: (fieldName: string, isValid: boolean, errorMsg: string) => void
+###### restoreForm(): void
 ###### resetForm(): void
 ###### resetField(fieldName: string): void
 ###### showFieldError(fieldName: string): boolean
@@ -221,7 +222,7 @@ const fm = new FM(loginFormSchema.js)
 ### start(tickSpeed): void
 ###### <b>Return value:</b> None
 ###### <b>Parameters:</b>
-###### <b>tickSpeed (integer; optional, default is 500):</b> Frequncy, in milliseconds, with which form is scanned for changes. This will determine how responsive the form is to user input.
+###### <b>tickSpeed (integer; optional, default is 25):</b> Frequncy, in milliseconds, with which form is scanned for changes. This will determine how responsive the form is to user input.
 ###### <b>Description: </b>Starts Form Manager V2 into tracking user input in the form. Before starting Form Manager, field values should first be initialized. On the first tick after start, the orginalValue (see <em>field</em> proprty below) is set to initial value of the field.
 ###### <b>Usage</b>
 ````javascript
@@ -407,7 +408,86 @@ fm.showFieldError('password')
 ### resetForm(): void
 ###### <b>Return value:</b> none
 ###### <b>Parameters:</b> none
-###### <b>Description: </b>Resets the form and and the field atributes for the fields, while preserving the field values. 
+###### <b>Description: </b>Restores the form and the field attributes for the fields, while returing the field values to their orginial values. 
+###### <b>Usage</b>
+
+````javascript
+//
+// Values before resetting the form
+//
+
+// Field values
+console.log(fm.fields)
+// returns
+{
+  "userName": {
+    "dirty": true,
+    "touched": true,
+    "value": "janejohnson",
+    "originalValue": "sallysmith",
+    "valid": true,
+    "errorMessage": ""
+  },
+  "phoneNumber": {
+    "dirty": true,
+    "touched": true,
+    "value": "999QQQQQQQ",
+    "originalValue": "888-999-1234",
+    "valid": false,
+    "errorMessage": "Not a valid phone number"
+  }  
+}
+
+// Form values
+console.log(fm.form)
+// returns
+{
+  "dirty": true,
+  "valid": false,
+  "touched": true
+}
+
+//
+// Values after resetting the form
+//
+fm.resetField('userName')
+console.log(fm.fields.userName)
+// Field values
+console.log(fm.fields)
+// returns
+{
+  "userName": {
+    "dirty": false,
+    "touched": false,
+    "value": "sallysmith",
+    "originalValue": "sallysmith",
+    "valid": true,
+    "errorMessage": ""
+  },
+  "phoneNumber": {
+    "dirty": false,
+    "touched": false,
+    "value": "888-999-1234",
+    "originalValue": "888-999-1234",
+    "valid": false,
+    "errorMessage": "Not a valid phone number"
+  }  
+}
+
+// Form values
+console.log(fm.form)
+// returns
+{
+  "dirty": false,
+  "valid": false,
+  "touched": false
+}
+````
+
+### resetForm(): void
+###### <b>Return value:</b> none
+###### <b>Parameters:</b> none
+###### <b>Description: </b>Resets the form and the field attributes for the fields, while preserving the field values. 
 ###### <b>Usage</b>
 
 ````javascript
